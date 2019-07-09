@@ -63,4 +63,11 @@ public class EmployeeService {
        }
     }
 
+            public List<Employee> findAllByNameAndAddress(String name,String address){
+            if(name == null && address == null){
+                throw new IllegalArgumentException("Null parameters cannot be given");
+            }
+            return employeeRepository.findAllByNameAndAddress(name,address);
+            }
+
 }

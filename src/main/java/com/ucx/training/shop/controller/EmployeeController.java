@@ -49,4 +49,9 @@ public class EmployeeController {
             return employeeService.findAll(direction,properties);
     }
 
+    @GetMapping("/all")
+    public List<Employee> findAllByNameAndAddress(@RequestParam String name,@RequestParam String address){
+        return employeeService.findAllByNameAndAddress(name,address);
+    }
+
 }
