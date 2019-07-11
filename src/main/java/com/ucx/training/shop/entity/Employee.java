@@ -13,15 +13,16 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Employee {
-
-    @Id //Indicates that this field is Primary Key
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Id generation strategy
-    private Integer id;
+public class Employee extends BaseModel<Integer> {
+  // Id generation strategy
     private String name;
     private String address;
-    @Enumerated(EnumType.STRING)
-    private RecordStatus recordStatus;
+
+    public Employee(Integer id,RecordStatus recordStatus,String name,String address){
+        super(id,recordStatus);
+        this.name = name;
+        this.address = address;
+    }
 
 
 }

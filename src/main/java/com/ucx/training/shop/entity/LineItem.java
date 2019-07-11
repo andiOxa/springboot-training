@@ -8,24 +8,33 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @Getter
 @Setter
 @NoArgsConstructor
-public class LineItem {
+public class LineItem extends BaseModel<Integer> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @ManyToMany(mappedBy = "lineItemList")
+    //@JoinColumn(name = "Invoice", referencedColumnName = "id")
+    private List<Invoice> invoice;
 
-    @ManyToOne
-    private Invoice invoice;
-
-    @ManyToOne
+    @OneToOne
+    @JoinColumn
     private Product product;
     private Integer quantity;
-    @Enumerated(EnumType.STRING)
-    private RecordStatus recordStatus;
+
+    public LineItem(Integer id, RecordStatus recordStatus,List<Invoice> invoice,Product product,Integer quantity){
+        super(id,recordStatus);
+        this.invoice = invoice;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Product: %s,Quantity: %s",getProduct(),getQuantity());
+    }
 }

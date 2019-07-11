@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
+public interface EmployeeRepository extends BaseRepository<Employee,Integer> {
     List<Employee> findAllByNameAndAddress(String name,String address);
 
 }

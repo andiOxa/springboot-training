@@ -13,15 +13,17 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Customer {
+public class Customer extends BaseModel<Integer>{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String name;
-    @Enumerated(EnumType.STRING)
-    private RecordStatus recordStatus;
+   private String name;
 
+   public Customer(Integer id ,String name,RecordStatus recordStatus){
+       super(id,recordStatus);
+       this.name = name;
+   }
 
-
+    @Override
+    public String toString() {
+        return String.format("%d,%s",1,this.getName());
+    }
 }

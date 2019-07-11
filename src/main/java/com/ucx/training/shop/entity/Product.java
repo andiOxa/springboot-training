@@ -14,19 +14,21 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product {
+public class Product extends BaseModel<Integer>{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
     private String name;
     private BigDecimal unitPrice;
     private Boolean inStock;
-    @Enumerated(EnumType.STRING)
-    private RecordStatus recordStatus;
 
+    public Product(Integer id,RecordStatus recordStatus,String name,BigDecimal unitPrice,Boolean inStock){
+        super(id,recordStatus);
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.inStock = inStock;
+    }
 
-
-
-
+    @Override
+    public String toString() {
+        return String.format("%s,%f,in stock: %b",getName(),getUnitPrice(),getInStock());
+    }
 }

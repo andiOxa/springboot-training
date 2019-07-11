@@ -17,23 +17,31 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Invoice {
+public class Invoice extends BaseModel<Integer> {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+
     private Integer invoiceNumber;
-    @ManyToOne
+    @OneToOne
+    @JoinColumn
     private Customer customer;
-    @ManyToMany
-    private List<LineItem> list = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "invoice_lineitems",
+            joinColumns = @JoinColumn(name = "invoice_id"),
+            inverseJoinColumns = @JoinColumn(name = "lineitem_id"))
+    private List<LineItem> lineItemList;
 
     private BigDecimal total;
-    @Enumerated(EnumType.STRING)
-    private RecordStatus recordStatus;
 
+    public Invoice(Integer id,RecordStatus recordStatus,Integer invoiceNumber,Customer customer,List<LineItem> lineItemList){
+        super(id,recordStatus);
+        this.invoiceNumber = invoiceNumber;
+        this.customer = customer;
+        this.lineItemList = lineItemList;
 
+    }
 
-
-
+    @Override
+    public String toString() {
+        return String.format("Invoice number: %d, Customer: %s, LineItem listLineItem: %s,Total: %f",getInvoiceNumber(),getCustomer(),getLineItemList(),getTotal());
+    }
 }
