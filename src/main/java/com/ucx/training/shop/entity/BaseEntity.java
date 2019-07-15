@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class BaseModel<T> {
+public abstract class BaseEntity<T> {
    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private T id;

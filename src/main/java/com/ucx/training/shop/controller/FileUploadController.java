@@ -13,33 +13,33 @@ import java.util.Arrays;
 
 
 @RestController
-@RequestMapping("upload")
+@RequestMapping("/upload")
 @Log4j2
 public class FileUploadController {
 
     @Autowired
     private FileUploadService fileUploadService;
 
-    @PostMapping
-    public void uploadFile(@RequestParam("file") MultipartFile file){
-        try {
+//    @PostMapping
+//    public void uploadFile(@RequestParam("file") MultipartFile file){
+//        try {
+//            fileUploadService.saveUploadedFile(file);
+//        }catch (IOException ex){
+//            log.error(ex.getMessage());
+//        }
+//    }
+
+    @PostMapping("/upload-multiple-files")
+    @ResponseBody
+    public void uploadMultipleFiles(@RequestParam("files") MultipartFile[] files)  {
+
+        Arrays.asList(files).forEach(file -> {
+            try{
             fileUploadService.saveUploadedFile(file);
         }catch (IOException ex){
             log.error(ex.getMessage());
         }
-    }
-
-    @PostMapping("/upload-multiple-files")
-    @ResponseBody
-        public void uploadMultipleFiles(@RequestParam("files") MultipartFile[] files)  {
-
-                Arrays.asList(files).forEach(file -> {
-                    try{
-                        fileUploadService.saveUploadedFile(file);
-                    }catch (IOException ex){
-                        log.error(ex.getMessage());
-                    }
-                });
+    });
 
     }
 }

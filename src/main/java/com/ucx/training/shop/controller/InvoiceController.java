@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("shop/invoice")
+@RequestMapping("/invoice")
 public class InvoiceController  {
 
     @Autowired
     private InvoiceService invoiceService;
 
-    @PostMapping
+    @PostMapping("buy")
     public Invoice create(@RequestBody Invoice invoice) {
         return invoiceService.save(invoice);
     }
@@ -38,5 +38,6 @@ public class InvoiceController  {
     public void remove(@PathVariable Integer id) {
         invoiceService.remove(id);
     }
+
 }
 

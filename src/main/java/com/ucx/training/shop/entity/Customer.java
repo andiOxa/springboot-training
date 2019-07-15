@@ -13,14 +13,10 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Customer extends BaseModel<Integer>{
+public class Customer extends BaseEntity<Integer> {
 
    private String name;
 
-   public Customer(Integer id ,String name,RecordStatus recordStatus){
-       super(id,recordStatus);
-       this.name = name;
-   }
 
     @Override
     public String toString() {

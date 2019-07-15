@@ -1,7 +1,6 @@
 package com.ucx.training.shop.entity;
 
 import com.ucx.training.shop.type.RecordStatus;
-import jdk.jfr.consumer.RecordedClass;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,23 +14,17 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class LineItem extends BaseModel<Integer> {
+public class LineItem extends BaseEntity<Integer> {
 
-    @ManyToMany(mappedBy = "lineItemList")
-    //@JoinColumn(name = "Invoice", referencedColumnName = "id")
-    private List<Invoice> invoice;
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
 
-    @OneToOne
-    @JoinColumn
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
     private Product product;
     private Integer quantity;
 
-    public LineItem(Integer id, RecordStatus recordStatus,List<Invoice> invoice,Product product,Integer quantity){
-        super(id,recordStatus);
-        this.invoice = invoice;
-        this.product = product;
-        this.quantity = quantity;
-    }
 
     @Override
     public String toString() {

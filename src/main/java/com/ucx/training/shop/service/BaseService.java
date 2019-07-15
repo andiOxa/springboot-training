@@ -1,23 +1,21 @@
 package com.ucx.training.shop.service;
 
-import com.ucx.training.shop.entity.BaseModel;
+import com.ucx.training.shop.entity.BaseEntity;
 import com.ucx.training.shop.repository.BaseRepository;
 import com.ucx.training.shop.type.RecordStatus;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
-public class BaseService<T extends BaseModel<U>,U> {
+public class BaseService<T extends BaseEntity<U>,U> {
 
     @Autowired
     private BaseRepository<T,U> baseRepository;
@@ -78,6 +76,15 @@ public class BaseService<T extends BaseModel<U>,U> {
         }
 
         t.setRecordStatus(RecordStatus.INACTIVE);
+    }
+
+    public List<T> findAllSorted(String direction, String ... properties) {
+
+        if (!Arrays.asList("ASC", "DESC").contains(direction.toUpperCase())) {
+            throw new IllegalArgumentException("Value must be either ASC or DESC: " + direction);
+        }
+
+        return baseRepository.findAll(Sort.by(Sort.Direction.valueOf(direction), properties));
     }
 
     private static <T> String[] getNullPropertyNames(T source) {
